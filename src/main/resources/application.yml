@@ -1,31 +1,9 @@
-## Configuration for Eureka
+## Load Balancer must use Railway's private domain name instead of Local IP
+## This value can be obtained in the Railway deployment tab, Settings -> Networking -> Private Networking
 eureka:
-  client:
-    registerWithEureka: true
-    fetchRegistry: true
-    service-url:
-      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
   instance:
-    preferIpAddress: false # For local development. Set to false if you want to use the hostname in a DNS-enabled environment
-    hostname: ${HOSTNAME:localhost}
-    port: 8080
-    non-secure-port: 8080
-## Configuration for App name and Spring Data
-spring:
-  application:
-    name: microservice
-  datasource:
-    url: jdbc:h2:mem:testdb
-  jpa:
-    show-sql: true
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-      settings:
-        web-allow-others: true
-
-## Instance port
-server:
-  port: 8080
-
+    preferIpAddress: false
+    non-secure-port-enabled: true
+    secure-port-enabled: false
+    non-secure-port: ${server.port}
+    secure-port: 443
